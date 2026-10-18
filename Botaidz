@@ -1,0 +1,270 @@
+
+-- BY TAI BA KHI HUB V2 | PURPLE NEON
+-- Roblox Studio: LocalScript
+-- Danh cho game do ban tao / co quyen chinh sua
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local old = playerGui:FindFirstChild("TaiBaKhiHubV2")
+if old then old:Destroy() end
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "TaiBaKhiHubV2"
+gui.ResetOnSpawn = false
+gui.Parent = playerGui
+
+local main = Instance.new("Frame")
+main.Size = UDim2.fromOffset(300, 320)
+main.Position = UDim2.new(0.5, -150, 0.5, -160)
+main.BackgroundColor3 = Color3.fromRGB(24, 15, 38)
+main.BorderSizePixel = 0
+main.Active = true
+main.Draggable = true
+main.Parent = gui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 12)
+corner.Parent = main
+
+local outline = Instance.new("UIStroke")
+outline.Color = Color3.fromRGB(190, 70, 255)
+outline.Thickness = 2
+outline.Parent = main
+
+local function makeButton(parent, name, text, pos, size)
+    local b = Instance.new("TextButton")
+    b.Name = name
+    b.Text = text
+    b.Position = pos
+    b.Size = size
+    b.BackgroundColor3 = Color3.fromRGB(80, 35, 125)
+    b.TextColor3 = Color3.new(1, 1, 1)
+    b.TextSize = 14
+    b.Font = Enum.Font.GothamSemibold
+    b.Parent = parent
+
+    local c = Instance.new("UICorner")
+    c.CornerRadius = UDim.new(0, 8)
+    c.Parent = b
+    return b
+end
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, -45, 0, 40)
+title.Position = UDim2.fromOffset(12, 0)
+title.BackgroundTransparency = 1
+title.Text = "BY TAI BA KHI HUB V2"
+title.TextColor3 = Color3.fromRGB(220, 150, 255)
+title.TextSize = 15
+title.Font = Enum.Font.GothamBold
+title.Parent = main
+
+local close = makeButton(
+    main, "Close", "X",
+    UDim2.new(1, -38, 0, 5),
+    UDim2.fromOffset(30, 30)
+)
+
+local fpsLabel = Instance.new("TextLabel")
+fpsLabel.Size = UDim2.new(1, -24, 0, 25)
+fpsLabel.Position = UDim2.fromOffset(12, 43)
+fpsLabel.BackgroundTransparency = 1
+fpsLabel.Text = "FPS: --"
+fpsLabel.TextColor3 = Color3.fromRGB(100, 255, 180)
+fpsLabel.TextSize = 14
+fpsLabel.Font = Enum.Font.GothamBold
+fpsLabel.Parent = main
+
+local speedLabel = Instance.new("TextLabel")
+speedLabel.Size = UDim2.new(1, -24, 0, 25)
+speedLabel.Position = UDim2.fromOffset(12, 73)
+speedLabel.BackgroundTransparency = 1
+speedLabel.TextColor3 = Color3.new(1, 1, 1)
+speedLabel.TextSize = 14
+speedLabel.Text = "Speed: 16"
+speedLabel.Parent = main
+
+local speedDown = makeButton(
+    main, "SpeedDown", "- Speed",
+    UDim2.fromOffset(12, 103),
+    UDim2.fromOffset(130, 35)
+)
+
+local speedUp = makeButton(
+    main, "SpeedUp", "+ Speed",
+    UDim2.fromOffset(158, 103),
+    UDim2.fromOffset(130, 35)
+)
+
+local jumpLabel = Instance.new("TextLabel")
+jumpLabel.Size = UDim2.new(1, -24, 0, 25)
+jumpLabel.Position = UDim2.fromOffset(12, 145)
+jumpLabel.BackgroundTransparency = 1
+jumpLabel.TextColor3 = Color3.new(1, 1, 1)
+jumpLabel.TextSize = 14
+jumpLabel.Text = "Jump: 50"
+jumpLabel.Parent = main
+
+local jumpDown = makeButton(
+    main, "JumpDown", "- Jump",
+    UDim2.fromOffset(12, 175),
+    UDim2.fromOffset(130, 35)
+)
+
+local jumpUp = makeButton(
+    main, "JumpUp", "+ Jump",
+    UDim2.fromOffset(158, 175),
+    UDim2.fromOffset(130, 35)
+)
+
+local espButton = makeButton(
+    main, "ESP", "ESP: OFF",
+    UDim2.fromOffset(12, 220),
+    UDim2.new(1, -24, 0, 35)
+)
+
+local resetButton = makeButton(
+    main, "Reset", "RESET SPEED / JUMP",
+    UDim2.fromOffset(12, 265),
+    UDim2.new(1, -24, 0, 35)
+)
+
+local reopen = makeButton(
+    gui, "Reopen", "OPEN HUB",
+    UDim2.new(0, 12, 0.5, 0),
+    UDim2.fromOffset(100, 40)
+)
+reopen.Visible = false
+
+local speed = 16
+local jump = 50
+local espEnabled = false
+local highlights = {}
+
+local function getHumanoid()
+    local character = player.Character
+    return character and character:FindFirstChildOfClass("Humanoid")
+end
+
+local function applyMovement()
+    local hum = getHumanoid()
+    if not hum then return end
+
+    hum.WalkSpeed = speed
+    hum.UseJumpPower = true
+    hum.JumpPower = jump
+
+    speedLabel.Text = "Speed: " .. speed
+    jumpLabel.Text = "Jump: " .. jump
+end
+
+speedDown.Activated:Connect(function()
+    speed = math.max(0, speed - 2)
+    applyMovement()
+end)
+
+speedUp.Activated:Connect(function()
+    speed = math.min(32, speed + 2)
+    applyMovement()
+end)
+
+jumpDown.Activated:Connect(function()
+    jump = math.max(0, jump - 5)
+    applyMovement()
+end)
+
+jumpUp.Activated:Connect(function()
+    jump = math.min(100, jump + 5)
+    applyMovement()
+end)
+
+resetButton.Activated:Connect(function()
+    speed = 16
+    jump = 50
+    applyMovement()
+end)
+
+-- ESP chi danh cho nhan vat trong game ban co quyen chinh sua
+local function clearHighlights()
+    for _, highlight in pairs(highlights) do
+        highlight:Destroy()
+    end
+    table.clear(highlights)
+end
+
+local function updateESP()
+    clearHighlights()
+    if not espEnabled then return end
+
+    for _, other in ipairs(Players:GetPlayers()) do
+        if other ~= player and other.Character then
+            local h = Instance.new("Highlight")
+            h.Name = "TaiXDebugHighlight"
+            h.FillColor = Color3.fromRGB(180, 60, 255)
+            h.OutlineColor = Color3.fromRGB(255, 255, 255)
+            h.FillTransparency = 0.65
+            h.Adornee = other.Character
+            h.Parent = gui
+            highlights[other] = h
+        end
+    end
+end
+
+espButton.Activated:Connect(function()
+    espEnabled = not espEnabled
+    espButton.Text = espEnabled and "ESP: ON" or "ESP: OFF"
+    updateESP()
+end)
+
+Players.PlayerAdded:Connect(function(other)
+    other.CharacterAdded:Connect(function()
+        task.wait(1)
+        updateESP()
+    end)
+end)
+
+Players.PlayerRemoving:Connect(function(other)
+    if highlights[other] then
+        highlights[other]:Destroy()
+        highlights[other] = nil
+    end
+end)
+
+player.CharacterAdded:Connect(function()
+    task.wait(1)
+    applyMovement()
+    updateESP()
+end)
+
+-- Dem FPS theo so khung hinh render
+local frames = 0
+local elapsed = 0
+
+RunService.RenderStepped:Connect(function(dt)
+    frames = frames + 1
+    elapsed = elapsed + dt
+
+    if elapsed >= 1 then
+        fpsLabel.Text = "FPS: " .. math.floor(frames / elapsed)
+        frames = 0
+        elapsed = 0
+    end
+end)
+
+close.Activated:Connect(function()
+    main.Visible = false
+    reopen.Visible = true
+end)
+
+reopen.Activated:Connect(function()
+    main.Visible = true
+    reopen.Visible = false
+end)
+
+applyMovement()
+print("BY TAI BA KHI HUB V2 loaded")
