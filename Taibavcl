@@ -1,0 +1,176 @@
+-- [[ HỆ THỐNG KEY SYSTEM - CHILI HUB V5 ]] --
+
+-- 1. CẤU HÌNH LINK VÀ SCRIPT CHÍNH
+local Link4M = "https://link4m.org/UPSrD" 
+local MainScriptURL = "https://raw.githubusercontent.com/kadit9999/stealanegg/refs/heads/main/ChilliV5BaKhi.lua"
+
+-- 2. TẠO GIAO DIỆN (GUI)
+local ScreenGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local UIStroke = Instance.new("UIStroke")
+local Title = Instance.new("TextLabel")
+
+local KeyTextBox = Instance.new("TextBox")
+local GetLinkBtn = Instance.new("TextButton")
+local CheckKeyBtn = Instance.new("TextButton")
+
+local SubTitle = Instance.new("TextLabel")
+local InfoBtn1 = Instance.new("TextButton")
+local InfoBtn2 = Instance.new("TextButton")
+
+-- Cài đặt GUI
+ScreenGui.Parent = game.CoreGui
+ScreenGui.Name = "ChiliV5KeySystem"
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(15, 17, 26)
+MainFrame.Position = UDim2.new(0.5, -180, 0.5, -150)
+MainFrame.Size = UDim2.new(0, 360, 0, 310)
+MainFrame.Active = true
+MainFrame.Draggable = true
+
+UICorner.CornerRadius = UDim.new(0, 12)
+UICorner.Parent = MainFrame
+
+UIStroke.Parent = MainFrame
+UIStroke.Color = Color3.fromRGB(255, 80, 0) -- Viền màu cam Chilli
+UIStroke.Thickness = 2
+
+-- Tiêu đề CHILI HUB V5
+Title.Parent = MainFrame
+Title.BackgroundTransparency = 1
+Title.Position = UDim2.new(0, 15, 0, 10)
+Title.Size = UDim2.new(1, -30, 0, 25)
+Title.Font = Enum.Font.SourceSansBold
+Title.Text = "🌶️ TAI HUB V5 - KEY SYSTEM"
+Title.TextColor3 = Color3.fromRGB(255, 100, 50)
+Title.TextSize = 16
+Title.TextXAlignment = Enum.TextXAlignment.Left
+
+-- Ô Nhập Key
+KeyTextBox.Parent = MainFrame
+KeyTextBox.BackgroundColor3 = Color3.fromRGB(25, 28, 40)
+KeyTextBox.Position = UDim2.new(0, 15, 0, 45)
+KeyTextBox.Size = UDim2.new(1, -30, 0, 35)
+KeyTextBox.Font = Enum.Font.SourceSans
+KeyTextBox.PlaceholderText = "Dán Key Chilli Hub V5 vào đây..."
+KeyTextBox.Text = ""
+KeyTextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+KeyTextBox.TextSize = 14
+
+local KeyCorner = Instance.new("UICorner")
+KeyCorner.CornerRadius = UDim.new(0, 8)
+KeyCorner.Parent = KeyTextBox
+
+-- Nút LẤY LINK KEY
+GetLinkBtn.Parent = MainFrame
+GetLinkBtn.BackgroundColor3 = Color3.fromRGB(255, 120, 0)
+GetLinkBtn.Position = UDim2.new(0, 15, 0, 90)
+GetLinkBtn.Size = UDim2.new(0, 160, 0, 35)
+GetLinkBtn.Font = Enum.Font.SourceSansBold
+GetLinkBtn.Text = "🔗 LẤY LINK KEY 4M"
+GetLinkBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+GetLinkBtn.TextSize = 14
+
+local BtnCorner1 = Instance.new("UICorner")
+BtnCorner1.CornerRadius = UDim.new(0, 8)
+BtnCorner1.Parent = GetLinkBtn
+
+-- Nút KIỂM TRA KEY
+CheckKeyBtn.Parent = MainFrame
+CheckKeyBtn.BackgroundColor3 = Color3.fromRGB(45, 48, 65)
+CheckKeyBtn.Position = UDim2.new(1, -175, 0, 90)
+CheckKeyBtn.Size = UDim2.new(0, 160, 0, 35)
+CheckKeyBtn.Font = Enum.Font.SourceSansBold
+CheckKeyBtn.Text = "✔ KIỂM TRA KEY"
+CheckKeyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CheckKeyBtn.TextSize = 14
+
+local BtnCorner2 = Instance.new("UICorner")
+BtnCorner2.CornerRadius = UDim.new(0, 8)
+BtnCorner2.Parent = CheckKeyBtn
+
+-- Dòng thông báo phụ
+SubTitle.Parent = MainFrame
+SubTitle.BackgroundTransparency = 1
+SubTitle.Position = UDim2.new(0, 15, 0, 132)
+SubTitle.Size = UDim2.new(1, -30, 0, 20)
+SubTitle.Font = Enum.Font.SourceSans
+SubTitle.Text = "Cảm ơn bạn đã sử dụng Chili Hub V5!"
+SubTitle.TextColor3 = Color3.fromRGB(150, 160, 180)
+SubTitle.TextSize = 12
+
+-- Nút Kênh Youtube của bạn (Hoặc trang cá nhân)
+InfoBtn1.Parent = MainFrame
+InfoBtn1.BackgroundColor3 = Color3.fromRGB(220, 40, 40)
+InfoBtn1.Position = UDim2.new(0, 15, 0, 160)
+InfoBtn1.Size = UDim2.new(1, -30, 0, 35)
+InfoBtn1.Font = Enum.Font.SourceSansBold
+InfoBtn1.Text = "▶ Kênh YouTube Official (Bấm để Copy)"
+InfoBtn1.TextColor3 = Color3.fromRGB(255, 255, 255)
+InfoBtn1.TextSize = 14
+
+local Corner3 = Instance.new("UICorner")
+Corner3.CornerRadius = UDim.new(0, 8)
+Corner3.Parent = InfoBtn1
+
+-- Nút TikTok / Cộng đồng của bạn
+InfoBtn2.Parent = MainFrame
+InfoBtn2.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+InfoBtn2.Position = UDim2.new(0, 15, 0, 205)
+InfoBtn2.Size = UDim2.new(1, -30, 0, 35)
+InfoBtn2.Font = Enum.Font.SourceSansBold
+InfoBtn2.Text = "🎵 TikTok / Support (Bấm để Copy)"
+InfoBtn2.TextColor3 = Color3.fromRGB(255, 255, 255)
+InfoBtn2.TextSize = 14
+
+local Corner4 = Instance.new("UICorner")
+Corner4.CornerRadius = UDim.new(0, 8)
+Corner4.Parent = InfoBtn2
+
+-- 3. XỬ LÝ SỰ KIỆN
+
+-- Nút LẤY LINK KEY
+GetLinkBtn.MouseButton1Click:Connect(function()
+    setclipboard(Link4M)
+    GetLinkBtn.Text = "✓ ĐÃ COPY LINK 4M!"
+    task.wait(2)
+    GetLinkBtn.Text = "🔗 LẤY LINK KEY 4M"
+end)
+
+-- Nút KIỂM TRA KEY & CHẠY SCRIPT CHÍNH
+CheckKeyBtn.MouseButton1Click:Connect(function()
+    local userKey = KeyTextBox.Text
+    
+    if string.sub(userKey, 1, 12) == "CHILLIHUBV2-" and #userKey >= 18 then
+        CheckKeyBtn.Text = "✓ KEY CHÍNH XÁC!"
+        CheckKeyBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 100)
+        task.wait(1)
+        
+        ScreenGui:Destroy()
+        loadstring(game:HttpGet(MainScriptURL))()
+    else
+        CheckKeyBtn.Text = "❌ KEY KHÔNG ĐÚNG!"
+        CheckKeyBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+        task.wait(1.5)
+        CheckKeyBtn.Text = "✔ KIỂM TRA KEY"
+        CheckKeyBtn.BackgroundColor3 = Color3.fromRGB(45, 48, 65)
+    end
+end)
+
+-- Nút Copy thông tin phụ
+InfoBtn1.MouseButton1Click:Connect(function()
+    setclipboard("https://youtube.com") -- Thay bằng link Youtube của bạn nếu có
+    InfoBtn1.Text = "✓ ĐÃ COPY LINK YOUTUBE!"
+    task.wait(1.5)
+    InfoBtn1.Text = "▶ Kênh YouTube Official (Bấm để Copy)"
+end)
+
+InfoBtn2.MouseButton1Click:Connect(function()
+    setclipboard("https://tiktok.com") -- Thay bằng link TikTok của bạn nếu có
+    InfoBtn2.Text = "✓ ĐÃ COPY LINK TIKTOK!"
+    task.wait(1.5)
+    InfoBtn2.Text = "🎵 TikTok / Support (Bấm để Copy)"
+end)
