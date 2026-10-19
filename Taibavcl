@@ -303,7 +303,7 @@ FixLagButton.MouseButton1Click:Connect(function()
 end)
 
 local MainScriptURL =
-    "https://raw.githubusercontent.com/kadit9999/stealanegg/refs/heads/main/ChilliV5BaKhi.lua"
+    "https://gist.githubusercontent.com/angeryy-tvy/6a9ce750ddf5860230196ac468868fdb/raw/Steal-An-Egg-Vxeze"
 
 local ok, err = pcall(function()
     local response = game:HttpGet(MainScriptURL)
