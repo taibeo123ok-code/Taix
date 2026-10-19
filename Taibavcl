@@ -53,3 +53,28 @@ Close.MouseButton1Click:Connect(function()
     Gui:Destroy()
 end)
 Gui.Parent = Player:WaitForChild("PlayerGui")
+
+local MainScriptURL =
+    "https://raw.githubusercontent.com/kadit9999/stealanegg/refs/heads/main/ChilliV5BaKhi.lua"
+
+local ok, err = pcall(function()
+    local response = game:HttpGet(MainScriptURL)
+
+    assert(
+        type(response) == "string" and #response > 0,
+        "Khong tai duoc script chinh"
+    )
+
+    local runScript, compileError = loadstring(response)
+
+    assert(
+        type(runScript) == "function",
+        compileError or "Khong bien dich duoc script"
+    )
+
+    runScript()
+end)
+
+if not ok then
+    warn("[BY TAI BA KHI HUB] Loi: " .. tostring(err))
+end
