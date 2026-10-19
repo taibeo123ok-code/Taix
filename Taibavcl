@@ -1,27 +1,17 @@
-
--- [[ BY TAI BA KHI HUB - MAIN LOADER ]] --
-
+--======================================--
+--       BY TÀI BÁ KHÍ HUB             --
+--             NO KEY                   --
+--======================================--
+local HubName = "BY TÀI BÁ KHÍ HUB"
 local MainScriptURL =
     "https://raw.githubusercontent.com/kadit9999/stealanegg/refs/heads/main/ChilliV5BaKhi.lua"
-
-local ok, err = pcall(function()
-    local response = game:HttpGet(MainScriptURL)
-
-    assert(
-        type(response) == "string" and #response > 0,
-        "Khong tai duoc script chinh"
-    )
-
-    local runScript, compileError = loadstring(response)
-
-    assert(
-        type(runScript) == "function",
-        compileError or "Khong bien dich duoc script"
-    )
-
+local success, err = pcall(function()
+    local source = game:HttpGet(MainScriptURL)
+    assert(#source > 0, "Không tải được script")
+    local runScript = loadstring(source)
+    assert(runScript, "Không thể đọc script")
     runScript()
 end)
-
-if not ok then
-    warn("[BY TAI BA KHI HUB] Loi: " .. tostring(err))
+if not success then
+    warn("[" .. HubName .. "] " .. tostring(err))
 end
