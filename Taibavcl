@@ -205,6 +205,57 @@ local function openMenu()
 end
 Close.MouseButton1Click:Connect(hideMenu)
 OpenButton.MouseButton1Click:Connect(openMenu)
+-- NÚT FIX LAG TRANG CHỦ
+local FixLagButton = Instance.new("TextButton")
+FixLagButton.Name = "FixLagButton"
+FixLagButton.Position = UDim2.new(0, 8, 0, 125)
+FixLagButton.Size = UDim2.new(1, -16, 0, 38)
+FixLagButton.BackgroundColor3 = Color3.fromRGB(115, 50, 185)
+FixLagButton.Text = "⚡ FIX LAG: OFF"
+FixLagButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+FixLagButton.TextSize = 14
+FixLagButton.Font = Enum.Font.GothamBold
+FixLagButton.BorderSizePixel = 0
+FixLagButton.Parent = Content
+local FixCorner = Instance.new("UICorner")
+FixCorner.CornerRadius = UDim.new(0, 8)
+FixCorner.Parent = FixLagButton
+local Lighting = game:GetService("Lighting")
+local fixLagEnabled = false
+local savedSettings = {}
+local function setFixLag(enabled)
+    fixLagEnabled = enabled
+    if enabled then
+        savedSettings.GlobalShadows = Lighting.GlobalShadows
+        Lighting.GlobalShadows = false
+        for _, obj in ipairs(Lighting:GetChildren()) do
+            if obj:IsA("BlurEffect")
+                or obj:IsA("SunRaysEffect")
+                or obj:IsA("BloomEffect")
+                or obj:IsA("DepthOfFieldEffect") then
+                savedSettings[obj] = obj.Enabled
+                obj.Enabled = false
+            end
+        end
+        FixLagButton.Text = "⚡ FIX LAG: ON"
+        FixLagButton.BackgroundColor3 = Color3.fromRGB(35, 155, 100)
+    else
+        if savedSettings.GlobalShadows ~= nil then
+            Lighting.GlobalShadows = savedSettings.GlobalShadows
+        end
+        for obj, wasEnabled in pairs(savedSettings) do
+            if typeof(obj) == "Instance" and obj.Parent then
+                obj.Enabled = wasEnabled
+            end
+        end
+        table.clear(savedSettings)
+        FixLagButton.Text = "⚡ FIX LAG: OFF"
+        FixLagButton.BackgroundColor3 = Color3.fromRGB(115, 50, 185)
+    end
+end
+FixLagButton.MouseButton1Click:Connect(function()
+    setFixLag(not fixLagEnabled)
+end)
 
 local MainScriptURL =
     "https://raw.githubusercontent.com/kadit9999/stealanegg/refs/heads/main/ChilliV5BaKhi.lua"
