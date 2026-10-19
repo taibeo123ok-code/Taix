@@ -13,5 +13,5 @@ local success, result = pcall(function()
 end)
 
 if not success then
-    warn("[BY TÀI BÁ KHÍ HUB] Lỗi khi tải script: " .. tostring(result))
+    warn("[BY TÀI BÁ KHÍ HUB] loi khi tai script: " .. tostring(result))
 end
