@@ -2,7 +2,7 @@
 -- [[ CHILI HUB V5 - MAIN SCRIPT LOADER ]] --
 
 local MainScriptURL =
-    "https://raw.githubusercontent.com/kadit9999/stealanegg/refs/heads/main/TaiBaKhiHub.lua"
+    "https://raw.githubusercontent.com/kadit9999/stealanegg/refs/heads/main/TaiBaKhi.lua"
 
 local success, result = pcall(function()
     local source = game:HttpGet(MainScriptURL)
@@ -13,5 +13,5 @@ local success, result = pcall(function()
 end)
 
 if not success then
-    warn("[BY TÀI BÁ KHÍ HUB] loi khi tai script: " .. tostring(result))
+    warn("[TAI BA KHI V5] Loi khi tai script: " .. tostring(result))
 end
