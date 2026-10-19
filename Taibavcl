@@ -1,17 +1,55 @@
---======================================--
---       BY TÀI BÁ KHÍ HUB             --
---             NO KEY                   --
---======================================--
+-- BY TAI BA KHI HUB | NO KEY
 local HubName = "BY TÀI BÁ KHÍ HUB"
-local MainScriptURL =
-    "https://raw.githubusercontent.com/kadit9999/stealanegg/refs/heads/main/ChilliV5BaKhi.lua"
-local success, err = pcall(function()
-    local source = game:HttpGet(MainScriptURL)
-    assert(#source > 0, "Không tải được script")
-    local runScript = loadstring(source)
-    assert(runScript, "Không thể đọc script")
-    runScript()
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local Gui = Instance.new("ScreenGui")
+Gui.Name = "ByTaiBaKhiHub"
+Gui.ResetOnSpawn = false
+local Frame = Instance.new("Frame")
+Frame.Name = "MainFrame"
+Frame.Size = UDim2.new(0, 300, 0, 140)
+Frame.Position = UDim2.new(0.5, -150, 0.5, -70)
+Frame.BackgroundColor3 = Color3.fromRGB(18, 18, 30)
+Frame.Parent = Gui
+local Corner = Instance.new("UICorner")
+Corner.CornerRadius = UDim.new(0, 12)
+Corner.Parent = Frame
+local Stroke = Instance.new("UIStroke")
+Stroke.Color = Color3.fromRGB(170, 70, 255)
+Stroke.Thickness = 2
+Stroke.Parent = Frame
+local Title = Instance.new("TextLabel")
+Title.Name = "Title"
+Title.Size = UDim2.new(1, -20, 0, 40)
+Title.Position = UDim2.new(0, 10, 0, 10)
+Title.BackgroundTransparency = 1
+Title.Text = "⚡ BY TÀI BÁ KHÍ HUB"
+Title.TextColor3 = Color3.fromRGB(200, 130, 255)
+Title.TextSize = 20
+Title.Font = Enum.Font.GothamBold
+Title.Parent = Frame
+local Info = Instance.new("TextLabel")
+Info.Size = UDim2.new(1, -20, 0, 45)
+Info.Position = UDim2.new(0, 10, 0, 55)
+Info.BackgroundTransparency = 1
+Info.Text = "Hub giao diện riêng của Tài"
+Info.TextColor3 = Color3.fromRGB(230, 230, 240)
+Info.TextSize = 14
+Info.Font = Enum.Font.Gotham
+Info.Parent = Frame
+local Close = Instance.new("TextButton")
+Close.Size = UDim2.new(0, 80, 0, 28)
+Close.Position = UDim2.new(0.5, -40, 1, -35)
+Close.BackgroundColor3 = Color3.fromRGB(125, 55, 190)
+Close.Text = "ĐÓNG"
+Close.TextColor3 = Color3.new(1, 1, 1)
+Close.TextSize = 14
+Close.Font = Enum.Font.GothamBold
+Close.Parent = Frame
+local CloseCorner = Instance.new("UICorner")
+CloseCorner.CornerRadius = UDim.new(0, 7)
+CloseCorner.Parent = Close
+Close.MouseButton1Click:Connect(function()
+    Gui:Destroy()
 end)
-if not success then
-    warn("[" .. HubName .. "] " .. tostring(err))
-end
+Gui.Parent = Player:WaitForChild("PlayerGui")
