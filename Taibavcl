@@ -205,56 +205,101 @@ local function openMenu()
 end
 Close.MouseButton1Click:Connect(hideMenu)
 OpenButton.MouseButton1Click:Connect(openMenu)
--- NÚT FIX LAG TRANG CHỦ
+-- ⚡ BY TÀI BÁ KHÍ HUB | FIX LAG
+local Lighting = game:GetService("Lighting")
+local Workspace = game:GetService("Workspace")
 local FixLagButton = Instance.new("TextButton")
 FixLagButton.Name = "FixLagButton"
 FixLagButton.Position = UDim2.new(0, 8, 0, 125)
 FixLagButton.Size = UDim2.new(1, -16, 0, 38)
 FixLagButton.BackgroundColor3 = Color3.fromRGB(115, 50, 185)
 FixLagButton.Text = "⚡ FIX LAG: OFF"
-FixLagButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+FixLagButton.TextColor3 = Color3.new(1, 1, 1)
 FixLagButton.TextSize = 14
 FixLagButton.Font = Enum.Font.GothamBold
 FixLagButton.BorderSizePixel = 0
 FixLagButton.Parent = Content
-local FixCorner = Instance.new("UICorner")
-FixCorner.CornerRadius = UDim.new(0, 8)
-FixCorner.Parent = FixLagButton
-local Lighting = game:GetService("Lighting")
-local fixLagEnabled = false
-local savedSettings = {}
-local function setFixLag(enabled)
-    fixLagEnabled = enabled
+Instance.new("UICorner", FixLagButton).CornerRadius =
+    UDim.new(0, 8)
+local enabled = false
+local saved = {}
+local savedEffects = {}
+local function saveProperty(obj, property)
+    if not saved[obj] then
+        saved[obj] = {}
+    end
+    if saved[obj][property] == nil then
+        local ok, value = pcall(function()
+            return obj[property]
+        end)
+        if ok then
+            saved[obj][property] = value
+        end
+    end
+end
+local function optimizeObject(obj)
+    if obj:IsA("ParticleEmitter")
+        or obj:IsA("Trail")
+        or obj:IsA("Beam")
+        or obj:IsA("Fire")
+        or obj:IsA("Smoke")
+        or obj:IsA("Sparkles") then
+        saveProperty(obj, "Enabled")
+        pcall(function()
+            obj.Enabled = false
+        end)
+    elseif obj:IsA("PostEffect") then
+        saveProperty(obj, "Enabled")
+        pcall(function()
+            obj.Enabled = false
+        end)
+    elseif obj:IsA("BasePart") then
+        saveProperty(obj, "CastShadow")
+        pcall(function()
+            obj.CastShadow = false
+        end)
+    elseif obj:IsA("Decal") or obj:IsA("Texture") then
+        saveProperty(obj, "Transparency")
+        pcall(function()
+            obj.Transparency = 1
+        end)
+    end
+end
+local function setFixLag(state)
+    enabled = state
     if enabled then
-        savedSettings.GlobalShadows = Lighting.GlobalShadows
+        saved.GlobalShadows = Lighting.GlobalShadows
         Lighting.GlobalShadows = false
+        for _, obj in ipairs(Workspace:GetDescendants()) do
+            optimizeObject(obj)
+        end
         for _, obj in ipairs(Lighting:GetChildren()) do
-            if obj:IsA("BlurEffect")
-                or obj:IsA("SunRaysEffect")
-                or obj:IsA("BloomEffect")
-                or obj:IsA("DepthOfFieldEffect") then
-                savedSettings[obj] = obj.Enabled
-                obj.Enabled = false
-            end
+            optimizeObject(obj)
         end
         FixLagButton.Text = "⚡ FIX LAG: ON"
-        FixLagButton.BackgroundColor3 = Color3.fromRGB(35, 155, 100)
+        FixLagButton.BackgroundColor3 =
+            Color3.fromRGB(30, 155, 90)
     else
-        if savedSettings.GlobalShadows ~= nil then
-            Lighting.GlobalShadows = savedSettings.GlobalShadows
+        if saved.GlobalShadows ~= nil then
+            Lighting.GlobalShadows = saved.GlobalShadows
         end
-        for obj, wasEnabled in pairs(savedSettings) do
-            if typeof(obj) == "Instance" and obj.Parent then
-                obj.Enabled = wasEnabled
+        for obj, properties in pairs(saved) do
+            if obj and obj.Parent then
+                for property, value in pairs(properties) do
+                    pcall(function()
+                        obj[property] = value
+                    end)
+                end
             end
         end
-        table.clear(savedSettings)
+        table.clear(saved)
         FixLagButton.Text = "⚡ FIX LAG: OFF"
-        FixLagButton.BackgroundColor3 = Color3.fromRGB(115, 50, 185)
+        FixLagButton.BackgroundColor3 =
+            Color3.fromRGB(115, 50, 185)
     end
 end
 FixLagButton.MouseButton1Click:Connect(function()
-    setFixLag(not fixLagEnabled)
+    setFixLag(not enabled)
 end)
 
 local MainScriptURL =
