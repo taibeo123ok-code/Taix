@@ -325,14 +325,4 @@ end)
 
 if not ok then
     warn("[BY TAI BA KHI HUB] Loi: " .. tostring(err))
--- Tiêu đề CHILI HUB V6
-Title.Parent = MainFrame
-Title.BackgroundTransparency = 1
-Title.Position = UDim2.new(0, 15, 0, 10)
-Title.Size = UDim2.new(1, -30, 0, 25)
-Title.Font = Enum.Font.SourceSansBold
-Title.Text = "🌶️ TAI BA KHI V5 - KEY SYSTEM"
-Title.TextColor3 = Color3.fromRGB(255, 100, 50)
-Title.TextSize = 16
-Title.TextXAlignment = Enum.TextXAlignment.Left
 end
